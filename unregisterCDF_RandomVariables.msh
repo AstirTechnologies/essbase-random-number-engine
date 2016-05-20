@@ -1,0 +1,57 @@
+set ServerName = 'servername';
+set User = 'admin';
+set Password = 'password';
+set SpoolFile = 'unregisterCDF_RandomVariables.log';
+
+/*
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Turn the spool on so that all output is captured in a log.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+spool on to $SpoolFile;
+set message level all;
+set timestamp off;
+
+/*
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Login to the Essbase Server.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+LOGIN $User $Password ON $ServerName;
+
+
+/*
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ UNREGISTER COUNTER FUNCTIONS
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+DROP FUNCTION dp.'@RandomVariablesRNGseedEngine';
+DROP FUNCTION dp.'@RandomVariablesRNGgetSeed';
+DROP FUNCTION dp.'@RandomVariablesRNGnextRaw';
+DROP FUNCTION dp.'@RandomVariablesRNGnextGamma';
+DROP FUNCTION dp.'@RandomVariablesRNGnextInt';
+DROP FUNCTION dp.'@RandomVariablesRNGnextDouble';
+DROP FUNCTION dp.'@RandomVariablesRNGnextNormal';
+DROP FUNCTION dp.'@RandomVariablesRNGnextBinomial';
+DROP FUNCTION dp.'@RandomVariablesRNGgetGeometricPdf';
+DROP FUNCTION dp.'@RandomVariablesRNGnextBurr1';
+DROP FUNCTION dp.'@RandomVariablesRNGnextBurr2';
+DROP FUNCTION dp.'@RandomVariablesRNGnextCauchy';
+DROP FUNCTION dp.'@RandomVariablesRNGnextErlang';
+DROP FUNCTION dp.'@RandomVariablesRNGnextGeometric';
+DROP FUNCTION dp.'@RandomVariablesRNGnextLambda';
+DROP FUNCTION dp.'@RandomVariablesRNGnextLaplace';
+DROP FUNCTION dp.'@RandomVariablesRNGnextLogistic';
+DROP FUNCTION dp.'@RandomVariablesRNGnextPowLaw';
+DROP FUNCTION dp.'@RandomVariablesRNGnextTriangular';
+DROP FUNCTION dp.'@RandomVariablesRNGnextWeibull';
+DROP FUNCTION dp.'@RandomVariablesRNGnextZipfInt';
+
+
+
+
+
+
+
+LOGOUT;
+EXIT;

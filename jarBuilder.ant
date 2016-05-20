@@ -1,0 +1,8 @@
+<project name="CDF_RandomVariables" default="createjar">    
+	  <property name="projectHome" location="." />
+	  <property name="essbaseHome" location="C:\Oracle\Middleware\EPMSystem11R1\products\Essbase\EssbaseServer\java\udf" />
+  <target name="createjar">
+    <!--jar destfile="${projectHome}/CDF_RandomVariables-1.0.jar" basedir="${projectHome}/bin" /-->
+    <jar destfile="${essbaseHome}/CDF_RandomVariables-1.0.jar" basedir="${projectHome}/bin" />
+  </target>    
+</project>

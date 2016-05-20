@@ -1,0 +1,79 @@
+set ServerName = 'servername';
+set User = 'admin';
+set Password = 'password';
+set SpoolFile = 'registerCDF_RandomVariables.log';
+
+/*
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Turn the spool on so that all output is captured in a log.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+spool on to $SpoolFile;
+set message level all;
+set timestamp off;
+
+/*
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Login to the Essbase Server.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+LOGIN $User $Password ON $ServerName;
+
+
+/*
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Register functions for essbase Random Number Generator 
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+CREATE OR REPLACE FUNCTION dp.'@RandomVariablesRNGseedEngine'
+AS 'com.astir.essbase.random.RandomVariables.seedEngine(out double)'
+SPEC '@RandomVariablesRNGseedEngine(seed)'
+COMMENT 'Seeds the RNG with a constant';
+
+CREATE OR REPLACE FUNCTION dp.'@RandomVariablesRNGgetSeed'
+AS 'com.astir.essbase.random.RandomVariables.getSeed(out double)'
+SPEC '@RandomVariablesRNGgetSeed(seedTarget)'
+COMMENT 'Seeds the RNG with a constant';
+
+CREATE OR REPLACE FUNCTION dp.'@RandomVariablesRNGnextRaw'
+AS 'com.astir.essbase.random.RandomVariables.getRaw(out double[])'
+SPEC '@RandomVariablesRNGnextRaw(Target)'
+COMMENT 'Returns next raw random';
+
+
+CREATE OR REPLACE FUNCTION dp.'@RandomVariablesRNGnextInt'
+AS 'com.astir.essbase.random.RandomVariables.nextInt(out double[])'
+SPEC '@RandomVariablesRNGnextInt(Target)'
+COMMENT 'Returns next double random';
+
+CREATE OR REPLACE FUNCTION dp.'@RandomVariablesRNGnextDouble'
+AS 'com.astir.essbase.random.RandomVariables.nextDouble(out double[])'
+SPEC '@RandomVariablesRNGnextDouble(Target)'
+COMMENT 'Returns next integer random';
+
+CREATE OR REPLACE FUNCTION dp.'@RandomVariablesRNGnextNormal'
+AS 'com.astir.essbase.random.RandomVariables.nextNormal(double, double,out double[])'
+SPEC '@RandomVariablesRNGnextNormal(mean, variance,Target)'
+COMMENT 'Returns next normal random';
+
+CREATE OR REPLACE FUNCTION dp.'@RandomVariablesRNGnextBinomial'
+AS 'com.astir.essbase.random.RandomVariables.nextBinomial(int, double,out double[])'
+SPEC '@RandomVariablesRNGnextBinomial(sample, probability,Target)'
+COMMENT 'Returns next binomial random';
+
+CREATE OR REPLACE FUNCTION dp.'@RandomVariablesRNGnextGamma'
+AS 'com.astir.essbase.random.RandomVariables.nextGamma(double,out double,out double[])'
+SPEC '@RandomVariablesRNGnextGamma(mean, variance,Target)'
+COMMENT 'Returns Gamma distribution';
+
+
+
+/*
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Logout and Exit
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+logout;
+exit;
+
+
